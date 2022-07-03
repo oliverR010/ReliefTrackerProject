@@ -24,9 +24,12 @@
 
 			<!-- Table Panel -->
 			<div class="col-md-12">
+				<div class="text-center mt-4 mb-4">
+					<h2>Records</h2>
+				</div>
 				<div class="card">
 					<div class="card-header">
-						<b>Monitoring List</b>
+
 						<span class="">
 
 							<button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" type="button" id="new_records">
@@ -51,69 +54,71 @@
 							</div>
 						</div>
 						<hr>
-						<table class="table table-responsive table-bordered table-condensed table-hover">
-							<colgroup>
-								<col width="2%">
-								<col width="10%">
-								<col width="10%">
-								<col width="15%">
-								<col width="20%">
-								<col width="15%">
-								<col width="10%">
-							</colgroup>
-							<thead>
-								<tr>
-									<th class="text-center">#</th>
-									<th class="">Date</th>
-									<th class="">Tracking ID</th>
-									<th class="">Name</th>
-									<th class="">Address</th>
-									<th class="">Establishment</th>
-									<th class="">Temperature</th>
-									<th class="text-center">Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php 
-								$i = 1;
-								$from = isset($_GET['from']) ? date('Y-m-d',strtotime($_GET['from'])) :date('Y-m-d', strtotime(date('Y-m-1'))); 
-								$to = isset($_GET['to']) ? date('Y-m-d',strtotime($_GET['to'])) :date('Y-m-d', strtotime(date('Y-m-1')." +1 month - 1 day"));
-								$ewhere = '';
-								if($_SESSION['login_establishment_id'] > 0)
-									$ewhere = " and t.establishment_id = '".$_SESSION['login_establishment_id']."' ";
-								$tracks = $conn->query("SELECT t.*,concat(p.lastname,', ',p.firstname,' ',p.middlename) as name, concat(p.address,', ',p.street,', ',p.baranggay,', ',p.city,', ',p.state,', ',p.zip_code) as caddress,e.name as ename,p.tracking_id FROM records t inner join households p on p.id = t.person_id inner join establishments e on e.id = t.establishment_id where date(t.date_created) between '$from' and '$to' $ewhere order by t.id desc");
-								while($row=$tracks->fetch_assoc()):
-								?>
-								<tr>
-									
-									<td class="text-center"><?php echo $i++ ?></td>
-									<td class="">
-										 <p> <b><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></b></p>
-									</td>
-									<td class="">
-										 <p> <b><?php echo $row['tracking_id'] ?></b></p>
-									</td>
-									<td class="">
-										 <p> <b><?php echo ucwords($row['name']) ?></b></p>
-									</td>
-									<td class="">
-										 <p> <b><?php echo $row['caddress'] ?></b></p>
-									</td>
-									<td class="">
-										 <p> <b><?php echo ucwords($row['ename']) ?></b></p>
-									</td>
-									<td class="text-right">
-										 <p> <b><?php echo $row['temperature'] ?>&#730;</b></p>
-									</td>
+						<div class="container-fluid table-responsive">
+							<table class="table  table-bordered table-condensed table-hover">
+								<colgroup>
+									<col width="2%">
+									<col width="10%">
+									<col width="10%">
+									<col width="15%">
+									<col width="20%">
+									<col width="15%">
+									<col width="10%">
+								</colgroup>
+								<thead>
+									<tr>
+										<th class="text-center">#</th>
+										<th class="">Date</th>
+										<th class="">Tracking ID</th>
+										<th class="">Name</th>
+										<th class="">Address</th>
+										<th class="">Establishment</th>
+										<th class="">Temperature</th>
+										<th class="text-center">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php 
+									$i = 1;
+									$from = isset($_GET['from']) ? date('Y-m-d',strtotime($_GET['from'])) :date('Y-m-d', strtotime(date('Y-m-1'))); 
+									$to = isset($_GET['to']) ? date('Y-m-d',strtotime($_GET['to'])) :date('Y-m-d', strtotime(date('Y-m-1')." +1 month - 1 day"));
+									$ewhere = '';
+									if($_SESSION['login_establishment_id'] > 0)
+										$ewhere = " and t.establishment_id = '".$_SESSION['login_establishment_id']."' ";
+									$tracks = $conn->query("SELECT t.*,concat(p.lastname,', ',p.firstname,' ',p.middlename) as name, concat(p.address,', ',p.street,', ',p.baranggay,', ',p.city,', ',p.state,', ',p.zip_code) as caddress,e.name as ename,p.tracking_id FROM records t inner join households p on p.id = t.person_id inner join establishments e on e.id = t.establishment_id where date(t.date_created) between '$from' and '$to' $ewhere order by t.id desc");
+									while($row=$tracks->fetch_assoc()):
+									?>
+									<tr>
+										
+										<td class="text-center"><?php echo $i++ ?></td>
+										<td class="">
+											<p> <b><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></b></p>
+										</td>
+										<td class="">
+											<p> <b><?php echo $row['tracking_id'] ?></b></p>
+										</td>
+										<td class="">
+											<p> <b><?php echo ucwords($row['name']) ?></b></p>
+										</td>
+										<td class="">
+											<p> <b><?php echo $row['caddress'] ?></b></p>
+										</td>
+										<td class="">
+											<p> <b><?php echo ucwords($row['ename']) ?></b></p>
+										</td>
+										<td class="text-right">
+											<p> <b><?php echo $row['temperature'] ?>&#730;</b></p>
+										</td>
 
-									<td class="text-center">
-										<button class="btn btn-sm btn-outline-primary edit_records" type="button" data-id="<?php echo $row['id'] ?>" >Edit</button>
-										<button class="btn btn-sm btn-outline-danger delete_records" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
-									</td>
-								</tr>
-								<?php endwhile; ?>
-							</tbody>
-						</table>
+										<td class="text-center">
+											<button class="btn btn-sm mb-1  btn-primary edit_records" type="button" style="width:70px" data-id="<?php echo $row['id'] ?>" >Edit</button>
+											<button class="btn btn-sm mb-1 btn-danger delete_records" type="button"  style="width:70px" data-id="<?php echo $row['id'] ?>">Delete</button>
+										</td>
+									</tr>
+									<?php endwhile; ?>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
