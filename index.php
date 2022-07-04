@@ -98,8 +98,8 @@
   <div class="modal fade" id="uni_modal" role='dialog'>
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title"></h5>
+        <div class="modal-header ">
+       <h5 class="modal-title "></h5>
       </div>
       <div class="modal-body">
       </div>

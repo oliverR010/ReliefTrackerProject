@@ -151,10 +151,7 @@ Class Action {
 	
 	function save_household(){
 		extract($_POST);
-		$data = " lastname = '$lastname' ";
-		$data .= ", firstname = '$firstname' ";
-		$data .= ", middlename = '$middlename' ";
-		$data .= ", address = '$address' ";
+		$data = " address = '$address' ";
 		$data .= ", street = '$street' ";
 		$data .= ", baranggay = '$baranggay' ";
 		$data .= ", city = '$city' ";

@@ -55,7 +55,7 @@
 						</div>
 						<hr>
 						<div class="container-fluid table-responsive">
-							<table class="table  table-bordered table-condensed table-hover">
+							<table class="table  table-bordered table-condensed table-hover table-striped">
 								<colgroup>
 									<col width="2%">
 									<col width="10%">
@@ -92,22 +92,22 @@
 										
 										<td class="text-center"><?php echo $i++ ?></td>
 										<td class="">
-											<p> <b><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></b></p>
+											<p><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></p>
 										</td>
 										<td class="">
-											<p> <b><?php echo $row['tracking_id'] ?></b></p>
+											<p><?php echo $row['tracking_id'] ?></p>
 										</td>
 										<td class="">
-											<p> <b><?php echo ucwords($row['name']) ?></b></p>
+											<p> <?php echo ucwords($row['name']) ?></p>
 										</td>
 										<td class="">
-											<p> <b><?php echo $row['caddress'] ?></b></p>
+											<p> <?php echo $row['caddress'] ?></p>
 										</td>
 										<td class="">
-											<p> <b><?php echo ucwords($row['ename']) ?></b></p>
+											<p> <?php echo ucwords($row['ename']) ?></p>
 										</td>
 										<td class="text-right">
-											<p> <b><?php echo $row['temperature'] ?>&#730;</b></p>
+											<p> <?php echo $row['temperature'] ?>&#730;</p>
 										</td>
 
 										<td class="text-center">

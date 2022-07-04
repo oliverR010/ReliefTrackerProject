@@ -8,6 +8,7 @@
 }
 </style>
 
+
 <div class="containe-fluid">
 
 	<div class="row mt-3 ml-3 mr-3">
@@ -36,7 +37,7 @@
                                         <p><b>Address: <span id="address"><?php echo isset($id) ? $caddress : '' ?></span></b></p>
                                         <input type="hidden" name="person_id" value="<?php echo isset($person_id) ? $person_id : '' ?>">
 
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="" class="control-label">Temperature</label>
                                             <input type="text" class="form-control" name="temperature"  value="<?php echo isset($temperature) ? $temperature :'' ?>" required>
                                         </div>
@@ -67,7 +68,7 @@
                                 </div>
                                 </div>
 
-                                </form>
+                                </form> -->
                             </div>
                             </div>
                         </div>      			

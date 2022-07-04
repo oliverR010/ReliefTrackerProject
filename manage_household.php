@@ -11,48 +11,37 @@ if(isset($_GET['id'])){
 	
 	<form action="" id="manage-household">
 		<input type="hidden" name="id" value="<?php echo isset($id) ? $id :'' ?>">
-		<div class="row form-group">
-			<div class="col-md-4">
-				<label for="" class="control-label">Last Name</label>
-				<input type="text" class="form-control" name="lastname"  value="<?php echo isset($lastname) ? $lastname :'' ?>" required>
-			</div>
-			<div class="col-md-4">
-				<label for="" class="control-label">First Name</label>
-				<input type="text" class="form-control" name="firstname"  value="<?php echo isset($firstname) ? $firstname :'' ?>" required>
-			</div>
-			<div class="col-md-4">
-				<label for="" class="control-label">Middle Name</label>
-				<input type="text" class="form-control" name="middlename"  value="<?php echo isset($middlename) ? $middlename :'' ?>" required>
-			</div>
-		</div>
 		<hr>
-			
 			<div class="row form-group">
-				<div class="col-md-4">
-					<label for="" class="control-label">Sub./Building/Block/Lot</label>
+				<div class="col-md-6">
+					<label for="" class="control-label">Building No</label>
 					<textarea name="address" id="address" class="form-control" cols="30" rows="2" required=""><?php echo isset($address) ? $address :'' ?></textarea>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-6">
 					<label for="" class="control-label">Street</label>
 					<textarea name="street" id="street" class="form-control" cols="30" rows="2" required=""><?php echo isset($street) ? $street :'' ?></textarea>
 				</div>
-				<div class="col-md-4">
+			
+			</div>
+		<hr>
+		<div class="row form-group">
+				<div class="col-md-6">
 					<label for="" class="control-label">Baranggay</label>
 					<textarea name="baranggay" id="baranggay" class="form-control" cols="30" rows="2" required=""><?php echo isset($baranggay) ? $baranggay :'' ?></textarea>
 				</div>
-			</div>
-		<hr>
-
-			<div class="row form-group">
-				<div class="col-md-4">
+				<div class="col-md-6">
 					<label for="" class="control-label">City</label>
 					<textarea name="city" id="city" class="form-control" cols="30" rows="2" required=""><?php echo isset($city) ? $city :'' ?></textarea>
 				</div>
-				<div class="col-md-4">
+		</div>
+		<hr>
+
+			<div class="row form-group">
+				<div class="col-md-6">
 					<label for="" class="control-label">State/Province</label>
 					<textarea name="state" id="state" class="form-control" cols="30" rows="2" required=""><?php echo isset($state) ? $state :'' ?></textarea>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-6">
 					<label for="" class="control-label">Zip Code</label>
 					<textarea name="zip_code" id="zip_code" class="form-control" cols="30" rows="2" required=""><?php echo isset($zip_code) ? $zip_code :'' ?></textarea>
 				</div>

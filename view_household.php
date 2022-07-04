@@ -5,7 +5,7 @@ extract($_POST);
 
 $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
 
-$qry = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households where id= ".$_GET['id']);
+$qry = $conn->query("SELECT *, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households where id= ".$_GET['id']);
 foreach($qry->fetch_array() as $k => $val){
 	$$k=$val;
 }
@@ -53,8 +53,6 @@ foreach($qry->fetch_array() as $k => $val){
 	</div>
 	<br>
 	<div class="col-lg-12 text-center" id="dfield">
-	<p><large><b><?php echo $name ?></b></large></p>
-	<hr>
 	<p><small><b><?php echo $caddress ?></b></small></p>
 	</div>
 </div>
@@ -65,9 +63,9 @@ foreach($qry->fetch_array() as $k => $val){
 			<tr>
 				<th class="text-center">#</th>
 				<th class="">Date</th>
-				<th class="">Establishment</th>
+				<!-- <th class="">Establishment</th> -->
 				<th class="">Address</th>
-				<th class="">Temperature</th>
+				<!-- <th class="">Temperature</th> -->
 			</tr>
 		</thead>
 		<tbody>

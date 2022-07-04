@@ -11,6 +11,7 @@
   transform: scale(1.5);
   padding: 10px;
 }
+
 </style>
 	<div class="col-lg-12">
 		<div class="row mb-4 mt-4">
@@ -58,7 +59,7 @@
 									<th class="text-center">Distribute</th>
 									<th class="text-center">#</th>
 									<th class="">Tracking ID</th>
-									<th class="">Name</th>
+							
 									<th class="">Address</th>
 									<th class="text-center">Action</th>
 								</tr>
@@ -66,7 +67,7 @@
 							<tbody>
 								<?php 
 								$i = 1;
-								$types = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households order by name asc");
+								$types = $conn->query("SELECT *,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households order by caddress asc");
 								while($row=$types->fetch_assoc()):
 								?>
 								<tr>
@@ -84,9 +85,7 @@
 									<td class="">
 										 <p> <?php echo $row['tracking_id'] ?></p>
 									</td>
-									<td class="">
-										 <p> <?php echo ucwords($row['name']) ?></p>
-									</td>
+			
 									<td class="">
 										 <p> <?php echo $row['caddress'] ?></p>
 									</td>
@@ -133,11 +132,11 @@
 
 	
 	$('.distribute_done').click(function(){
-		distribute_modal("Edits household","manage_distribute.php?id="+$(this).attr('data-id'),"mid-large")
+		distribute_modal("Edits Household","manage_distribute.php?id="+$(this).attr('data-id'),"mid-large")
 	})
 
 	$('.edit_household').click(function(){
-		uni_modal("Edit household","manage_household.php?id="+$(this).attr('data-id'),"mid-large")
+		uni_modal("Edit Household","manage_household.php?id="+$(this).attr('data-id'),"mid-large")
 		
 	})
 	$('.view_household').click(function(){
