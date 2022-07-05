@@ -25,7 +25,7 @@
 			<!-- Table Panel -->
 			<div class="col-md-12">
 				<div class="text-center mt-4 mb-4">
-					<h2>Records</h2>
+					<h2>Distributed Households</h2>
 				</div>
 				<div class="card">
 					<div class="card-header">
@@ -39,72 +39,69 @@
 				</span>
 					</div>
 					<div class="card-body">
-						<div class="row form-group">
-							<div class="col-md-4">
-								<label for="" class="control-label">From</label>
-								<input type="date" class="form-control" name="from"  value="<?php echo isset($_GET['from']) ? date('Y-m-d',strtotime($_GET['from'])) :date('Y-m-d', strtotime(date('Y-m-1'))); ?>" required>
-							</div>
-							<div class="col-md-4">
-								<label for="" class="control-label">To</label>
-								<input type="date" class="form-control" name="to"  value="<?php echo isset($_GET['to']) ? date('Y-m-d',strtotime($_GET['to'])) :date('Y-m-d', strtotime(date('Y-m-1')." +1 month - 1 day")); ?>" required>
-							</div>
-							<div class="col-md-2">
-								<label for="" class="control-label">&nbsp</label>
-								<button class="btn btn-primary btn-block" id="filter" type="button">Filter</button>								
-							</div>
-						</div>
+						
 						<hr>
 						<div class="container-fluid table-responsive">
-							<table class="table  table-bordered table-condensed table-hover table-striped">
+							<table class="table table-bordered table-condensed table-hover table-striped">
 								<colgroup>
-									<col width="2%">
 									<col width="10%">
-									<col width="10%">
-									<col width="25%">
-									<col width="10%">
+									<col width="15%">
+									<col width="30%">
+									<col width="15%">
+									<col width="15%">
+									<col width="20%">
+
 							
 								</cole_tgroup>
 								<thead>
 									<tr>
 										<th class="text-center">#</th>
-										<th class="text-center">Date</th>
 										<th class="text-center">Tracking ID</th>
 										<th class="text-center">Address</th>
+										<th class="text-center">Status</th>
+										<th class="text-center">Date Distributed</th>
 										<th class="text-center">Action</th>
+									
+
 									</tr>
 								</thead>
 								<tbody>
 									<?php 
+
+				
+
+
 									$i = 1;
-									$from = isset($_GET['from']) ? date('Y-m-d',strtotime($_GET['from'])) :date('Y-m-d', strtotime(date('Y-m-1'))); 
-									$to = isset($_GET['to']) ? date('Y-m-d',strtotime($_GET['to'])) :date('Y-m-d', strtotime(date('Y-m-1')." +1 month - 1 day"));
-									$ewhere = '';
+								$types = $conn->query("SELECT *,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records order by caddress asc");
+								while($row=$types->fetch_assoc()):
+								?>
+								<tr>
+									<!-- <th class="text-center">
+										<div class="form-check">
+										 	<input class="form-check-input position-static input-lg" type="checkbox" name="checked[]" value="<?php echo $row['id'] ?>">
+									 	</div>
+									</th> -->
+									<td class="text-center"><?php echo $i++ ?></td>
 									
-									if($_SESSION['login_establishment_id'] > 0)
-										$ewhere = " and t.establishment_id = '".$_SESSION['login_establishment_id']."' ";
-									$tracks = $conn->query("SELECT t.*, concat(p.address,', ',p.street,', ',p.baranggay,', ',p.city,', ',p.state,', ',p.zip_code) as caddress, p.tracking_id FROM records t inner join households p on p.id = t.person_id inner join establishments e on e.id = t.establishment_id where date(t.date_created) between '$from' and '$to' $ewhere order by t.id desc");
-									while($row=$tracks->fetch_assoc()):
-									?>
-									<tr>
-										
-										<td class="text-center"><?php echo $i++ ?></td>
-										<td class="">
-											<p><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></p>
-										</td>
-										<td class="text-center">
-											<p><?php echo $row['tracking_id'] ?></p>
-										</td>
-									
-										<td class="text-center">
-											<p> <?php echo $row['caddress'] ?></p>
-										</td>
-														
-										<td class="text-center">
-											<!-- <button class="btn btn-sm mb-1  btn-primary edit_records" type="button" style="width:70px" data-id="<?php echo $row['id'] ?>" >Edit</button> -->
-											<button class="btn btn-sm mb-1 btn-danger delete_records" type="button"  style="width:70px" data-id="<?php echo $row['id'] ?>">Delete</button>
-										</td>
-									</tr>
-									<?php endwhile; ?>
+									<td class="text-center">
+										 <p> <?php echo $row['tracking_id'] ?></p>
+									</td>
+									<td class="text-center">
+										 <p> <?php echo $row['caddress'] ?></p>
+									</td>
+									<td class="text-center">
+										 <p> <?php echo $row['status'] ?></p>
+									</td>
+									<td class="text-center">
+									<p><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></p>
+									</td>
+									<td class="text-center">
+										<button class="btn btn-sm btn-primary view_household mt-1" style="width:80px" type="button" data-id="<?php echo $row['id'] ?>" >View</button>				
+										<button class="btn btn-sm btn-danger delete_records
+										 mt-1" style="width:80px" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+									</td>
+								</tr>
+								<?php endwhile; ?>
 								</tbody>
 							</table>
 						</div>
@@ -143,8 +140,18 @@
 		
 	})
 
+	$('.view_household').click(function(){
+		uni_modal("Household Details","view_household.php?id="+$(this).attr('data-id'),"large")
+		
+	})
+	
+	// $('.delete_records').click(function(){
+	// 	_conf("Are you sure to delete this Record?","delete_records",[$(this).attr('data-id')])
+	// })
+
 	$('.delete_records').click(function(){
-		_conf("Are you sure to delete this Household?","delete_records",[$(this).attr('data-id')])
+		deleterec_modal("Please Confirm","manage_delrecords.php?id="+$(this).attr('data-id'),"mid-large")
+		
 	})
 
 	$('#check_all').click(function(){
@@ -168,7 +175,7 @@
 		$.ajax({
 			url:"print_records.php",
 			method:"POST",
-			data:{from : '<?php echo $from ?>' , to : "<?php echo $to ?>"},
+			data:{id:$id},
 			success:function(resp){
 				if(resp){
 					var nw = window.open("","_blank","height=600,width=900")
@@ -188,25 +195,28 @@
 		location.replace("index.php?page=records&from="+$('[name="from"]').val()+"&to="+$('[name="to"]').val())
 	})
 
-	function delete_records($id){
-		start_load()
-		$.ajax({
-			url:'function.php?action=delete_records',
-			method:'POST',
-			data:{
-				id:$id
-			},
-			success:function(resp){
-				if(resp==1){
-					alert_toast("Data successfully deleted",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
+	// function delete_records($id){
+	// 	start_load()
+	// 	$.ajax({
+	// 		url:'function.php?action=delete_records',
+	// 		method:'POST',
+	// 		data:{
+	// 			id:$id
+			
+	// 		},
+	// 		success:function(resp){
+	// 			if(resp==1){
+	// 				alert_toast("Data successfully deleted",'success')
+	// 				setTimeout(function(){
+	// 					location.reload()
+	// 				},1500)
 
-				}
+	// 			}
 	
-			}
-		})
-	}
+	// 		}
+	// 	})
+	// }
+
+	
 
 </script>

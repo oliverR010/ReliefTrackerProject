@@ -5,7 +5,7 @@ extract($_POST);
 
 $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
 
-$qry = $conn->query("SELECT *, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households where id= ".$_GET['id']);
+$qry = $conn->query("SELECT *, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records where id= ".$_GET['id']);
 foreach($qry->fetch_array() as $k => $val){
 	$$k=$val;
 }
@@ -65,13 +65,14 @@ foreach($qry->fetch_array() as $k => $val){
 				<th class="text-center">Date</th>
 				<!-- <th class="">Establishment</th> -->
 				<th class="text-center">Address</th>
+				<th class="text-center">Status</th>
 				<!-- <th class="">Temperature</th> -->
 			</tr>
 		</thead>
 		<tbody>
 			<?php 
 			$i = 1;
-			$tracks = $conn->query("SELECT t.*,e.address,e.name as ename FROM records t inner join establishments e on e.id = t.establishment_id where t.person_id = '$id' order by t.id desc");
+			$tracks = $conn->query("SELECT * FROM records where address = '$address' order by address desc");
 			while($row=$tracks->fetch_assoc()):
 			?>
 			<tr>
@@ -82,7 +83,10 @@ foreach($qry->fetch_array() as $k => $val){
 				</td>
 			
 				<td class="text-center">
-					 <p> <b><?php echo $row['address'] ?></b></p>
+					 <p> <b><?php echo $row['address'],  $row['street'],  $row['baranggay'],  $row['city'],  $row['state'], $row['zip_code']  ?></b></p>
+				</td>
+				<td class="text-center">
+					 <p> <b><?php echo $row['status'] ?></b></p>
 				</td>
 			
 			</tr>
@@ -100,6 +104,7 @@ foreach($qry->fetch_array() as $k => $val){
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
 	$('#print').click(function(){
 		var nw = window.open("","_blank","height=700,width=900")

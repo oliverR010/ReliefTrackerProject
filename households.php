@@ -48,8 +48,18 @@
 						</div>	
 					</div>
 					<div class="card-body table-responsive">
-						<table class="table table-hover table-striped table-bordered">
-							<thead>
+					<table class="table  table-bordered table-condensed table-hover table-striped">
+					<colgroup>
+									<col width="10%">
+									<col width="10%">
+									<col width="30%">
+									<col width="20%">
+							
+
+							
+								</cole_tgroup>
+						<thead>
+							
 								<tr>
 									<!-- <th class="text-center">
 										 <div class="form-check">
@@ -58,16 +68,16 @@
 									</th> -->
 									<th class="text-center">Distribute</th>
 									<th class="text-center">#</th>
-									<th class="">Tracking ID</th>
-							
-									<th class="">Address</th>
+									<th class="text-center">Address</th>
 									<th class="text-center">Action</th>
 								</tr>
 							</thead>
 							<tbody>
+
 								<?php 
 								$i = 1;
-								$types = $conn->query("SELECT *,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households order by caddress asc");
+								$types = $conn->query("SELECT * ,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households order by caddress asc");
+								
 								while($row=$types->fetch_assoc()):
 								?>
 								<tr>
@@ -76,28 +86,47 @@
 										 	<input class="form-check-input position-static input-lg" type="checkbox" name="checked[]" value="<?php echo $row['id'] ?>">
 									 	</div>
 									</th> -->
-									<td class="text-center">
-									<button class="btn btn-sm btn-warning distribute_done mt-1" style="width:80px" type="button" data-id="<?php echo $row['id'] ?>" ><i class="mr-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-									<path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-									</svg></i></button>
-									</td>
+								
+									<?php 
+									// $types1 = $conn->query("SELECT * ,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records order by caddress asc");
+
+									// while($row1=$types->fetch_assoc()):
+
+											if($row['status'] =="Pending"){
+
+										?>
+
+												<td class="text-center">
+													
+												<button class="btn btn-sm btn-warning distribute_done mt-1" style="width:80px" id="done" type="button" data-id="<?php echo $row['id'] ?>" ><i class="mr-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+												<path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+												</svg></i></button>
+												</td>
+												
+												<?php  }
+									if($row['status'] =="Success"){?>
+											
+											<td class="text-center">
+											<p>Done</p>
+											</td>
+									<?php  }?>
 									<td class="text-center"><?php echo $i++ ?></td>
-									<td class="">
-										 <p> <?php echo $row['tracking_id'] ?></p>
-									</td>
+									<!-- <td class="">
+										<?php echo $row['tracking_id'] ?>
+									</td> -->
 			
-									<td class="">
+									<td class="text-center">
 										 <p> <?php echo $row['caddress'] ?></p>
 									</td>
 									<td class="text-center">
 										
-										<button class="btn btn-sm btn-primary view_household mt-1" style="width:80px" type="button" data-id="<?php echo $row['id'] ?>" >View</button>
 										<button class="btn btn-sm btn-success edit_household mt-1" style="width:80px" type="button" data-id="<?php echo $row['id'] ?>" >Edit</button>
 										<button class="btn btn-sm btn-danger delete_household
 										 mt-1" style="width:80px" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
 									</td>
 								</tr>
-								<?php endwhile; ?>
+							
+							<?php endwhile; ?>
 							</tbody>
 						</table>
 					</div>
@@ -132,7 +161,7 @@
 
 	
 	$('.distribute_done').click(function(){
-		distribute_modal("Edits Household","manage_distribute.php?id="+$(this).attr('data-id'),"mid-large")
+		distribute_modal("Verify Address","manage_distribute.php?id="+$(this).attr('data-id'))
 	})
 
 	$('.edit_household').click(function(){
@@ -213,22 +242,6 @@
 		})
 	}
 
-	function distribute_done($id){
-		start_load()
-		$.ajax({
-			url:'function.php?action=distribute_done',
-			method:'POST',
-			data:{id:$id},
-			success:function(resp){
-				if(resp==1){
-					alert_toast("Relief Packs successfully D",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
 
-				}
-			}
-		})
-	}
 	
 </script>

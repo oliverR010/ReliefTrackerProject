@@ -144,8 +144,14 @@ Class Action {
 	}
 	function delete_records(){
 		extract($_POST);
+		$status_pending = "Pending";
+		$data = " status = '$status_pending' ";
+		$data .= ", address = '$address' ";
+		
+		$save = $this->db->query("UPDATE households set ".$data." where address=".$address);
 		$delete = $this->db->query("DELETE FROM records where id = ".$id);
-		if($delete)
+
+		if($save)
 			return 1;
 	}
 	
@@ -160,21 +166,25 @@ Class Action {
 		$cwhere ='';
 		
 		if(empty($id)){
-			$tracking_id = mt_rand(1,9999999999);
-			$tracking_id  = sprintf("%'010d\n", $tracking_id);
-			$i= 1;
-			while($i == 1){
-				$check = $this->db->query("SELECT * FROM households where tracking_id ='$tracking_id' ")->num_rows;
-				if($check > 0){
-					$tracking_id = mt_rand(1,9999999999);
-					$tracking_id  = sprintf("%'010d\n", $tracking_id);
-				}else{
-					$i = 0;
-				}
-			}
+		// 	$tracking_id = mt_rand(1,9999999999);
+		// 	$tracking_id  = sprintf("%'010d\n", $tracking_id);
+		// 	$i= 1;
+		// 	while($i == 1){
+		// 		$check = $this->db->query("SELECT * FROM households where tracking_id ='$tracking_id' ")->num_rows;
+		// 		if($check > 0){
+		// 			$tracking_id = mt_rand(1,9999999999);
+		// 			$tracking_id  = sprintf("%'010d\n", $tracking_id);
+		// 		}else{
+		// 			$i = 0;
+		// 		}
+		// 	}
 
-		$data .= ", tracking_id = '$tracking_id' ";
-			$save = $this->db->query("INSERT INTO households set ".$data);
+		// $data .= ", tracking_id = '$tracking_id' ";
+
+		$status_pending ="Pending";
+		$data .= ", status = '$status_pending' ";
+
+		$save = $this->db->query("INSERT INTO households set ".$data);
 		}else{
 			$save = $this->db->query("UPDATE households set ".$data." where id=".$id);
 		}
@@ -190,7 +200,7 @@ Class Action {
 		$data .= ", city = '$city' ";
 		$data .= ", state = '$state' ";
 		$data .= ", zip_code = '$zip_code' ";
-
+	
 	
 		if(!empty($id)){
 			$tracking_id = mt_rand(1,9999999999);
@@ -206,11 +216,14 @@ Class Action {
 				}
 			}
 
+			$status_success ="Success";
+			// $reliefpacks=1;
+			// $data .= ", reliefpacks = '$reliefpacks' ";
+			$data .= ", status = '$status_success' ";
 			$data .= ", tracking_id = '$tracking_id' ";
 			$save = $this->db->query("INSERT INTO records set ".$data);
-			
+			$save = $this->db->query("UPDATE households set status='$status_success' where id=".$id);
 		}else{
-	
 			$save = $this->db->query("UPDATE records set ".$data." where id=".$id);
 		}
 		if($save){
@@ -279,22 +292,16 @@ Class Action {
 			}
 	}
 
-	function distribute_done(){
-		extract($_POST);
-		$save = $this->db->query("SELECT * FROM households where id = ".$id);
-		
-			if($save){
-				return 1;
-			}
-	}
+
 
 	function get_pdetails(){
 		extract($_POST);
-		$get = $this->db->query("SELECT *, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households where tracking_id = $tracking_id ");
+		$get = $this->db->query("SELECT *, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code,', ',street,', ',date_created) as caddress FROM records where tracking_id = $tracking_id ");
+
 		$data = array();
 		if($get->num_rows > 0){
 			foreach($get->fetch_array() as $k => $v){
-				$data['status'] = 1;
+				$data['status1'] = 1;
 				if(!is_numeric($k)){
 					if($k == 'caddress')
 						$v = ucwords($v);
@@ -302,7 +309,7 @@ Class Action {
 				}
 			}
 		}else{
-			$data['status'] = 2;
+			$data['status1'] = 2;
 		}
 		return json_encode($data);
 		

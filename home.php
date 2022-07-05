@@ -32,29 +32,39 @@
                                             <button class="btn btn-sm btn-primary btn-sm col-sm-2 btn-block float-right" type="button" id="check">Check</button>
                                         </div>
                                     </div>
-                                    <div id="details" <?php echo isset($id) ? "style='display:block'" : 'style="display:none"' ?>>
-                                        <p><b>Address: <span id="address"><?php echo isset($id) ? $caddress : '' ?></span></b></p>
-                                        <input type="hidden" name="person_id" value="<?php echo isset($person_id) ? $person_id : '' ?>">
 
-                                        <div class="form-group">
+                                    <div id="details" <?php echo isset($id) ? "style='display:block'" : 'style="display:none"' ?>>
+                                 
+                                        <p><b>Address:</b> <span id="address"><?php echo isset($id) ? $caddress : ''?></span>,
+                                        <span id="street"><?php echo isset($id) ? $street : ''?></span>,
+                                       <span id="baranggay"><?php echo isset($id) ? $baranggay : ''?></span>,
+                                       <span id="city"><?php echo isset($id) ? $city : ''?></span>,
+
+                                       <span id="state"><?php echo isset($id) ? $state : ''?></span>,
+                                        <span id="zip_code"><?php echo isset($id) ? $zip_code : ''?></span>,
+                                        </p>
+                                        <p><b>Status:</b> <span id="status"><?php echo isset($id) ? $status :  ''?></span></p>
+                                        <p><b>Date Distributed:</b> <span id="date_created"><?php echo date("M d,Y h:i A",strtotime(isset($id)? $date_created : '')) ?></span></p>
+
+                                        <!-- <div class="form-group">
                                             <label for="" class="control-label">Temperature</label>
                                             <input type="text" class="form-control" name="temperature"  value="<?php echo isset($temperature) ? $temperature :'' ?>" required>
-                                        </div>
+                                        </div> -->
                                         <?php if($_SESSION['login_type'] == 1): ?>
                                         <div class="form-group">
-                                            <label for="" class="control-label">Establishment</label>
-                                            <select name="establishment_id" id="" class="custom-select select2">
+                                            <!-- <label for="" class="control-label">Status</label> -->
+                                            <!-- <select name="status" id="" class="custom-select select2">
                                                 <option value=""></option>
                                         <?php 
-                                            $establishment = $conn->query("SELECT * FROM establishments order by name asc");
+                                            $establishment = $conn->query("SELECT * FROM records order by address asc");
                                             while($row= $establishment->fetch_assoc()):
                                         ?>
-                                                <option value="<?php echo $row['id'] ?>" <?php echo isset($establishment_id) && $row['id'] == $establishment_id ? 'selected' : '' ?>><?php echo $row['name'] ?></option>
+                                                <option value="<?php echo $row['address'] ?>" <?php echo isset($status) && $row['status'] == $status ? 'selected' : '' ?>><?php echo $row['status'] ?></option>
                                         <?php endwhile; ?>
-                                            </select>
+                                            </select> -->
                                         </div>
                                         <?php else: ?>
-                                        <input type="hidden" name="establishment_id" value="<?php echo isset($establishment_id) ? $establishment_id : $_SESSION['login_establishment_id'] ?>">
+                                        <input type="hidden" name="status" value="<?php echo isset($status) ? $establishment_id : $_SESSION['login_establishment_id'] ?>">
                                         <?php endif; ?>
                                 <hr>
                                 <div class="row">
@@ -95,7 +105,7 @@
             type: 'POST',
             success:function(resp){
                 resp=JSON.parse(resp)
-                if(resp.status==1){
+                if(resp.status1==1){
                     alert_toast("Data successfully saved",'success')
                     setTimeout(function(){
                         location.reload()
@@ -126,14 +136,22 @@
                 success:function(resp){
                     if(resp){
                         resp = JSON.parse(resp)
-                        if(resp.status == 1){
+                        if(resp.status1 == 1){
                             $('#name').html(resp.name)
+                            $('#status').html(resp.status)
                             $('#address').html(resp.address)
+                            $('#date_created').html(resp.date_created)
+                            $('#street').html(resp.street)
+                            $('#baranggay').html(resp.baranggay)
+                            $('#city').html(resp.city)
+                            $('#state').html(resp.state)
+                            $('#zip_code').html(resp.zip_code)
+
                             $('[name="person_id"]').val(resp.id)
                             $('#details').show()
                             end_load()
 
-                        }else if(resp.status == 2){
+                        }else if(resp.status1 == 2){
                             alert_toast("Unknow tracking id.",'danger');
                             end_load();
                         }

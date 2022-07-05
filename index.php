@@ -112,6 +112,23 @@
     </div>
   </div>
   
+  <div class="modal fade" id="deleterec_modal" role='dialog'>
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+       <h5 class="text-center modal-title "></h5>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id='submit' onclick="$('#deleterec_modal form').submit()">Confirm</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="distribute_modal" role='dialog'>
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
@@ -187,6 +204,35 @@
                     $('#uni_modal .modal-dialog').removeAttr("class").addClass("modal-dialog modal-md")
                 }
                 $('#uni_modal').modal({
+                  show:true,
+                  backdrop:'static',
+                  keyboard:false,
+                  focus:true
+                })
+                end_load()
+            }
+        }
+    })
+}
+
+window.deleterec_modal = function($title = '' , $url='',$size=""){
+    start_load()
+    $.ajax({
+        url:$url,
+        error:err=>{
+            console.log()
+            alert("An error occured")
+        },
+        success:function(resp){
+            if(resp){
+                $('#deleterec_modal .modal-title').html($title)
+                $('#deleterec_modal .modal-body').html(resp)
+                if($size != ''){
+                    $('#deleterec_modal .modal-dialog').addClass($size)
+                }else{
+                    $('#deleterec_modal .modal-dialog').removeAttr("class").addClass("modal-dialog modal-md")
+                }
+                $('#deleterec_modal').modal({
                   show:true,
                   backdrop:'static',
                   keyboard:false,
