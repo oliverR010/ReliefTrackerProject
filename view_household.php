@@ -65,7 +65,7 @@ foreach($qry->fetch_array() as $k => $val){
 				<th class="text-center">Date</th>
 				<!-- <th class="">Establishment</th> -->
 				<th class="text-center">Address</th>
-				<th class="text-center">Status</th>
+			
 				<!-- <th class="">Temperature</th> -->
 			</tr>
 		</thead>
@@ -85,9 +85,7 @@ foreach($qry->fetch_array() as $k => $val){
 				<td class="text-center">
 					 <p> <b><?php echo $row['address'],  $row['street'],  $row['baranggay'],  $row['city'],  $row['state'], $row['zip_code']  ?></b></p>
 				</td>
-				<td class="text-center">
-					 <p> <b><?php echo $row['status'] ?></b></p>
-				</td>
+			
 			
 			</tr>
 			<?php endwhile; ?>

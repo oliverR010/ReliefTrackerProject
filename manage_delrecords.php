@@ -8,8 +8,8 @@ if(isset($_GET['id'])){
 }
 ?>
 <div class="container-fluid">
-	
-	<form action="" id="delete_records">
+		<p>Are you sure to delete this record?</p>
+	<form action="" id="delete_records" hidden>
 		<input type="hidden" name="id" value="<?php echo isset($id) ? $id :'' ?>">
 		<hr>
 			<div class="row form-group">
@@ -24,7 +24,7 @@ if(isset($_GET['id'])){
 			
 			</div>
 		<hr>
-		<div class="row form-group">
+		<div class="row form-group" hidden>
 				<div class="col-md-6">
 					<label for="" class="control-label">Baranggay</label>
 					<textarea name="baranggay" id="baranggay" class="form-control" cols="30" rows="2" required=""><?php echo isset($baranggay) ? $baranggay :'' ?></textarea>
@@ -36,7 +36,7 @@ if(isset($_GET['id'])){
 		</div>
 		<hr>
 
-			<div class="row form-group">
+			<div class="row form-group" hidden>
 				<div class="col-md-6">
 					<label for="" class="control-label">State/Province</label>
 					<textarea name="state" id="state" class="form-control" cols="30" rows="2" required=""><?php echo isset($state) ? $state :'' ?></textarea>
@@ -67,7 +67,7 @@ if(isset($_GET['id'])){
 		    type: 'POST',
 			success:function(resp){
 				if(resp==1){
-					alert_toast("Data successfully saved",'success')
+					alert_toast("Record successfully Deleted",'success')
 					setTimeout(function(){
 						location.reload()
 					},1500)

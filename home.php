@@ -12,10 +12,13 @@
 <div class="containe-fluid">
 
 	<div class="row mt-3 ml-3 mr-3">
+            <div class="text-center mt-4 mb-4">
+					<h2>Let's Track it!</h2>
+				</div>
 			<div class="col-lg-12">
     			<div class="card">
     				<div class="card-body">
-    				<?php echo "Welcome back ". $_SESSION['login_name']."!"  ?>
+    				<!-- <?php echo "Welcome back ". $_SESSION['login_name']."!"  ?> -->
     					<hr>	
 
                         <div class="row">
@@ -43,7 +46,11 @@
                                        <span id="state"><?php echo isset($id) ? $state : ''?></span>,
                                         <span id="zip_code"><?php echo isset($id) ? $zip_code : ''?></span>,
                                         </p>
-                                        <p><b>Status:</b> <span id="status"><?php echo isset($id) ? $status :  ''?></span></p>
+
+                                        <p>
+                                            <b>Status:</b> <span id="status"><?php echo isset($id) ? $status :  ''?></span>
+                                       
+                                        </p>
                                         <p><b>Date Distributed:</b> <span id="date_created"><?php echo date("M d,Y h:i A",strtotime(isset($id)? $date_created : '')) ?></span></p>
 
                                         <!-- <div class="form-group">

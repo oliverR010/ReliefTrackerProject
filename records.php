@@ -31,9 +31,8 @@
 					<div class="card-header">
 
 						<span class="">
-
-							<button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" type="button" id="new_records">
-					<i class="fa fa-plus"></i> New</button>
+							<!-- <button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" type="button" id="new_records">
+					<i class="fa fa-plus"></i> New</button> -->
 					<button class="btn btn-success btn-block btn-sm col-sm-2 float-right mr-2 mt-0" type="button" id="print">
 					<i class="fa fa-print"></i> Print</button>
 				</span>
@@ -147,7 +146,7 @@
 	// })
 
 	$('.delete_records').click(function(){
-		deleterec_modal("Please Confirm","manage_delrecords.php?id="+$(this).attr('data-id'),"mid-large")
+		deleterec_modal("Please Confirm","manage_delrecords.php?id="+$(this).attr('data-id'))
 		
 	})
 
