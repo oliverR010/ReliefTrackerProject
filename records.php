@@ -47,7 +47,7 @@
 									<col width="10%">
 									<col width="15%">
 									<col width="30%">
-									<col width="15%">
+							
 									<col width="15%">
 									<col width="20%">
 
@@ -58,7 +58,6 @@
 										<th class="text-center">#</th>
 										<th class="text-center">Tracking ID</th>
 										<th class="text-center">Address</th>
-										<th class="text-center">Status</th>
 										<th class="text-center">Date Distributed</th>
 										<th class="text-center">Action</th>
 									
@@ -89,9 +88,7 @@
 									<td class="text-center">
 										 <p> <?php echo $row['caddress'] ?></p>
 									</td>
-									<td class="text-center">
-										 <p> <?php echo $row['status'] ?></p>
-									</td>
+							
 									<td class="text-center">
 									<p><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></p>
 									</td>
