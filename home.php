@@ -33,11 +33,10 @@
                                         </div>
                                     </div>
                                     <div id="details" <?php echo isset($id) ? "style='display:block'" : 'style="display:none"' ?>>
-                                        <p><b>Name: <span id="name"><?php echo isset($id) ? ucwords($name) : '' ?></span></b></p>
                                         <p><b>Address: <span id="address"><?php echo isset($id) ? $caddress : '' ?></span></b></p>
                                         <input type="hidden" name="person_id" value="<?php echo isset($person_id) ? $person_id : '' ?>">
 
-                                        <!-- <div class="form-group">
+                                        <div class="form-group">
                                             <label for="" class="control-label">Temperature</label>
                                             <input type="text" class="form-control" name="temperature"  value="<?php echo isset($temperature) ? $temperature :'' ?>" required>
                                         </div>
@@ -68,7 +67,7 @@
                                 </div>
                                 </div>
 
-                                </form> -->
+                                </form>
                             </div>
                             </div>
                         </div>      			

@@ -181,6 +181,68 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
+	function save_distribute(){
+		extract($_POST);
+		$data = " address = '$address' ";
+		$data .= ", street = '$street' ";
+		$data .= ", baranggay = '$baranggay' ";	
+		$data .= ", city = '$city' ";
+		$data .= ", state = '$state' ";
+		$data .= ", zip_code = '$zip_code' ";
+
+	
+		if(!empty($id)){
+			$tracking_id = mt_rand(1,9999999999);
+			$tracking_id  = sprintf("%'010d\n", $tracking_id);
+			$i= 1;
+			while($i == 1){
+				$check = $this->db->query("SELECT * FROM records where tracking_id ='$tracking_id' ")->num_rows;
+				if($check > 0){
+					$tracking_id = mt_rand(1,9999999999);
+					$tracking_id  = sprintf("%'010d\n", $tracking_id);
+				}else{
+					$i = 0;
+				}
+			}
+
+			$data .= ", tracking_id = '$tracking_id' ";
+			$save = $this->db->query("INSERT INTO records set ".$data);
+			
+		}else{
+	
+			$save = $this->db->query("UPDATE records set ".$data." where id=".$id);
+		}
+		if($save){
+
+			return 1;
+			
+		}
+		
+		// // if(!empty($id)){
+		// 	$tracking_id = mt_rand(1,9999999999);
+		// 	$tracking_id  = sprintf("%'010d\n", $tracking_id);
+		// 	$i= 1;
+
+		// 	while($i == 1){
+		// 		$check = $this->db->query("SELECT * FROM households where tracking_id ='$tracking_id' ")->num_rows;
+		// 		if($check > 0){
+		// 			$tracking_id = mt_rand(1,9999999999);
+		// 			$tracking_id  = sprintf("%'010d\n", $tracking_id);
+		// 		}else{
+		// 			$i = 0;
+		// 		}
+		// 	}
+		// $data .= ", tracking_id = '$tracking_id' ";
+
+		// 	$save = $this->db->query("INSERT INTO records set ".$data);
+		// // }else{
+		// // 	$save = $this->db->query("INSERT INTO records set ".$data." where id=".$id);
+		// // }
+		// if($save)
+		// 	return 1;
+	}
+
 	function delete_household(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM households where id = ".$id);
@@ -228,13 +290,13 @@ Class Action {
 
 	function get_pdetails(){
 		extract($_POST);
-		$get = $this->db->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households where tracking_id = $tracking_id ");
+		$get = $this->db->query("SELECT *, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households where tracking_id = $tracking_id ");
 		$data = array();
 		if($get->num_rows > 0){
 			foreach($get->fetch_array() as $k => $v){
 				$data['status'] = 1;
 				if(!is_numeric($k)){
-					if($k == 'name')
+					if($k == 'caddress')
 						$v = ucwords($v);
 					$data[$k]=$v;
 				}

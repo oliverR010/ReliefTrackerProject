@@ -60,20 +60,16 @@
 									<col width="2%">
 									<col width="10%">
 									<col width="10%">
-									<col width="15%">
-									<col width="20%">
-									<col width="15%">
+									<col width="25%">
 									<col width="10%">
-								</colgroup>
+							
+								</cole_tgroup>
 								<thead>
 									<tr>
 										<th class="text-center">#</th>
-										<th class="">Date</th>
-										<th class="">Tracking ID</th>
-										<th class="">Name</th>
-										<th class="">Address</th>
-										<th class="">Establishment</th>
-										<th class="">Temperature</th>
+										<th class="text-center">Date</th>
+										<th class="text-center">Tracking ID</th>
+										<th class="text-center">Address</th>
 										<th class="text-center">Action</th>
 									</tr>
 								</thead>
@@ -83,9 +79,10 @@
 									$from = isset($_GET['from']) ? date('Y-m-d',strtotime($_GET['from'])) :date('Y-m-d', strtotime(date('Y-m-1'))); 
 									$to = isset($_GET['to']) ? date('Y-m-d',strtotime($_GET['to'])) :date('Y-m-d', strtotime(date('Y-m-1')." +1 month - 1 day"));
 									$ewhere = '';
+									
 									if($_SESSION['login_establishment_id'] > 0)
 										$ewhere = " and t.establishment_id = '".$_SESSION['login_establishment_id']."' ";
-									$tracks = $conn->query("SELECT t.*,concat(p.lastname,', ',p.firstname,' ',p.middlename) as name, concat(p.address,', ',p.street,', ',p.baranggay,', ',p.city,', ',p.state,', ',p.zip_code) as caddress,e.name as ename,p.tracking_id FROM records t inner join households p on p.id = t.person_id inner join establishments e on e.id = t.establishment_id where date(t.date_created) between '$from' and '$to' $ewhere order by t.id desc");
+									$tracks = $conn->query("SELECT t.*, concat(p.address,', ',p.street,', ',p.baranggay,', ',p.city,', ',p.state,', ',p.zip_code) as caddress, p.tracking_id FROM records t inner join households p on p.id = t.person_id inner join establishments e on e.id = t.establishment_id where date(t.date_created) between '$from' and '$to' $ewhere order by t.id desc");
 									while($row=$tracks->fetch_assoc()):
 									?>
 									<tr>
@@ -94,24 +91,16 @@
 										<td class="">
 											<p><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></p>
 										</td>
-										<td class="">
+										<td class="text-center">
 											<p><?php echo $row['tracking_id'] ?></p>
 										</td>
-										<td class="">
-											<p> <?php echo ucwords($row['name']) ?></p>
-										</td>
-										<td class="">
+									
+										<td class="text-center">
 											<p> <?php echo $row['caddress'] ?></p>
 										</td>
-										<td class="">
-											<p> <?php echo ucwords($row['ename']) ?></p>
-										</td>
-										<td class="text-right">
-											<p> <?php echo $row['temperature'] ?>&#730;</p>
-										</td>
-
+														
 										<td class="text-center">
-											<button class="btn btn-sm mb-1  btn-primary edit_records" type="button" style="width:70px" data-id="<?php echo $row['id'] ?>" >Edit</button>
+											<!-- <button class="btn btn-sm mb-1  btn-primary edit_records" type="button" style="width:70px" data-id="<?php echo $row['id'] ?>" >Edit</button> -->
 											<button class="btn btn-sm mb-1 btn-danger delete_records" type="button"  style="width:70px" data-id="<?php echo $row['id'] ?>">Delete</button>
 										</td>
 									</tr>
@@ -155,7 +144,7 @@
 	})
 
 	$('.delete_records').click(function(){
-		_conf("Are you sure to delete this Person?","delete_records",[$(this).attr('data-id')])
+		_conf("Are you sure to delete this Household?","delete_records",[$(this).attr('data-id')])
 	})
 
 	$('#check_all').click(function(){

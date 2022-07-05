@@ -2,7 +2,7 @@
 <?php
 session_start();
 if(isset($_GET['id'])){
-$qry = $conn->query("SELECT t.*,concat(p.lastname,', ',p.firstname,' ',p.middlename) as name, concat(p.address,', ',p.street,', ',p.baranggay,', ',p.city,', ',p.state,', ',p.zip_code) as caddress,e.name as ename,p.tracking_id FROM records t inner join households p on p.id = t.person_id inner join establishments e on e.id = t.establishment_id  where t.id= ".$_GET['id']);
+$qry = $conn->query("SELECT t.*, concat(p.address,', ',p.street,', ',p.baranggay,', ',p.city,', ',p.state,', ',p.zip_code) as caddress,p.tracking_id FROM records t inner join households p on p.id = t.person_id inner join establishments e on e.id = t.establishment_id  where t.id= ".$_GET['id']);
 foreach($qry->fetch_array() as $k => $val){
 	$$k=$val;
 }
@@ -21,7 +21,6 @@ foreach($qry->fetch_array() as $k => $val){
 			</div>
 		</div>
 		<div id="details" <?php echo isset($id) ? "style='display:block'" : 'style="display:none"' ?>>
-			<p><b>Name: <span id="name"><?php echo isset($id) ? ucwords($name) : '' ?></span></b></p>
 			<p><b>Address: <span id="address"><?php echo isset($id) ? $caddress : '' ?></span></b></p>
 			<input type="hidden" name="person_id" value="<?php echo isset($person_id) ? $person_id : '' ?>">
 

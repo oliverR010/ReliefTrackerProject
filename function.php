@@ -66,6 +66,13 @@ if($action == "save_household"){
 	if($save)
 		echo $save;
 }
+
+if($action == "save_distribute"){
+	$save = $crud->save_distribute();
+	if($save)
+		echo $save;
+}
+
 if($action == "delete_household"){
 	$save = $crud->delete_household();
 	if($save)

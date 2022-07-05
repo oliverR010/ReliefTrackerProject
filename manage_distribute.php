@@ -11,7 +11,7 @@ if(isset($_GET['id'])){
 	
 	<form action="" id="manage-distribute">
     <input type="hidden" name="id" value="<?php echo isset($id) ? $id :'' ?>">
-		<div class="row form-group">
+		<!-- <div class="row form-group" hidden>
 			<div class="col-md-4">
 				<label for="" class="control-label">Last Name</label>
 				<input type="text" class="form-control" name="lastname"  value="<?php echo isset($lastname) ? $lastname :'' ?>" required>
@@ -24,9 +24,9 @@ if(isset($_GET['id'])){
 				<label for="" class="control-label">Middle Name</label>
 				<input type="text" class="form-control" name="middlename"  value="<?php echo isset($middlename) ? $middlename :'' ?>" required>
 			</div>
-		</div>
+		</div> -->
 		<hr hidden>
-			<div class="row form-group" hidden >
+			<div class="row form-group"  >
 				<div class="col-md-4">
 					<label for="" class="control-label">Sub./Building/Block/Lot</label>
 					<textarea name="address" id="address" class="form-control" cols="30" rows="2" required=""><?php echo isset($address) ? $address :'' ?></textarea>
@@ -42,7 +42,7 @@ if(isset($_GET['id'])){
 			</div>
 		<hr>
 
-			<div class="row form-group" hidden>
+			<div class="row form-group" >
 				<div class="col-md-4">
 					<label for="" class="control-label">City</label>
 					<textarea name="city" id="city" class="form-control" cols="30" rows="2" required=""><?php echo isset($city) ? $city :'' ?></textarea>
@@ -68,7 +68,7 @@ if(isset($_GET['id'])){
 		start_load()
 		$('#msg').html('')
 		$.ajax({
-			url:'function.php?action=save_household',
+			url:'function.php?action=save_distribute',
 			data: new FormData($(this)[0]),
 		    cache: false,
 		    contentType: false,

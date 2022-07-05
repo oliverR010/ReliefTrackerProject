@@ -62,9 +62,9 @@ foreach($qry->fetch_array() as $k => $val){
 		<thead>
 			<tr>
 				<th class="text-center">#</th>
-				<th class="">Date</th>
+				<th class="text-center">Date</th>
 				<!-- <th class="">Establishment</th> -->
-				<th class="">Address</th>
+				<th class="text-center">Address</th>
 				<!-- <th class="">Temperature</th> -->
 			</tr>
 		</thead>
@@ -77,18 +77,14 @@ foreach($qry->fetch_array() as $k => $val){
 			<tr>
 				
 				<td class="text-center"><?php echo $i++ ?></td>
-				<td class="">
+				<td class="text-center">
 					 <p> <b><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></b></p>
 				</td>
-				<td class="">
-					 <p> <b><?php echo ucwords($row['ename']) ?></b></p>
-				</td>
-				<td class="">
+			
+				<td class="text-center">
 					 <p> <b><?php echo $row['address'] ?></b></p>
 				</td>
-				<td class="text-right">
-					 <p> <b><?php echo $row['temperature'] ?>&#730;</b></p>
-				</td>
+			
 			</tr>
 			<?php endwhile; ?>
 		</tbody>
