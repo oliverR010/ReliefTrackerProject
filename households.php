@@ -61,11 +61,11 @@
 						<thead>
 							
 								<tr>
-									<!-- <th class="text-center">
+									<th class="text-center">
 										 <div class="form-check">
 										  <input class="form-check-input position-static" type="checkbox" id="check_all"  aria-label="...">
 										</div>
-									</th> -->
+									</th>
 									<th class="text-center">Distribute</th>
 									<th class="text-center">#</th>
 									<th class="text-center">Address</th>
@@ -81,11 +81,11 @@
 								while($row=$types->fetch_assoc()):
 								?>
 								<tr>
-									<!-- <th class="text-center">
+									<th class="text-center">
 										<div class="form-check">
 										 	<input class="form-check-input position-static input-lg" type="checkbox" name="checked[]" value="<?php echo $row['id'] ?>">
 									 	</div>
-									</th> -->
+									</th>
 								
 									<?php 
 									// $types1 = $conn->query("SELECT * ,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records order by caddress asc");

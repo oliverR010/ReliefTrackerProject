@@ -1,12 +1,14 @@
 <?php
 include 'db_connect.php';
 require 'assets/barcode/vendor/autoload.php';
+
+
 extract($_POST);
 
 $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
 $ids = implode(",",$ids);
 
-$qry = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records where id in ($ids) ");
+$qry = $conn->query("SELECT *, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records where id in ($ids)");
 while($row = $qry->fetch_array()){
 	foreach($row as $k => $v){
 			$$k = $v;

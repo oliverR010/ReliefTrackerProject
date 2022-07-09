@@ -1,4 +1,8 @@
-<?php include('db_connect.php');?>
+<?php include('db_connect.php');
+require 'dompdf/autoload.inc.php';
+
+
+?>
 
 <div class="container-fluid">
 <style>
@@ -33,8 +37,8 @@
 						<span class="">
 							<!-- <button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" type="button" id="new_records">
 					<i class="fa fa-plus"></i> New</button> -->
-					<button class="btn btn-success btn-block btn-sm col-sm-2 float-right mr-2 mt-0" type="button" id="print">
-					<i class="fa fa-print"></i> Print</button>
+					<a href="print_records.php" download="DistributedHouseholds" ><button class="btn btn-success btn-block btn-sm col-sm-2 float-right mr-2 mt-0" type="button"  id="">
+					<i class="fa fa-print"></i> Print</button></a>
 				</span>
 					</div>
 					<div class="card-body">
@@ -47,7 +51,7 @@
 									<col width="15%">
 									<col width="30%">
 							
-									<col width="15%">
+								
 									<col width="20%">
 
 							
@@ -57,7 +61,6 @@
 										<th class="text-center">#</th>
 										<th class="text-center">Tracking ID</th>
 										<th class="text-center">Address</th>
-										<th class="text-center">Date Distributed</th>
 										<th class="text-center">Action</th>
 									
 
@@ -87,10 +90,7 @@
 									<td class="text-center">
 										 <p> <?php echo $row['caddress'] ?></p>
 									</td>
-							
-									<td class="text-center">
-									<p><?php echo date("M d,Y h:i A",strtotime($row['date_created'])) ?></p>
-									</td>
+						
 									<td class="text-center">
 										<button class="btn btn-sm btn-primary view_household mt-1" style="width:80px" type="button" data-id="<?php echo $row['id'] ?>" >View</button>				
 										<button class="btn btn-sm btn-danger delete_records
@@ -186,6 +186,8 @@
 			}
 		})
 	})
+
+
 
 	$('#filter').click(function(){
 		location.replace("index.php?page=records&from="+$('[name="from"]').val()+"&to="+$('[name="to"]').val())

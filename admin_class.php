@@ -203,14 +203,14 @@ Class Action {
 	
 	
 		if(!empty($id)){
-			$tracking_id = mt_rand(1,9999999999);
-			$tracking_id  = sprintf("%'010d\n", $tracking_id);
+			$tracking_id = mt_rand(1,999999999999);
+			$tracking_id  = sprintf("%'012d\n", $tracking_id);
 			$i= 1;
 			while($i == 1){
 				$check = $this->db->query("SELECT * FROM records where tracking_id ='$tracking_id' ")->num_rows;
 				if($check > 0){
-					$tracking_id = mt_rand(1,9999999999);
-					$tracking_id  = sprintf("%'010d\n", $tracking_id);
+					$tracking_id = mt_rand(1,999999999999);
+					$tracking_id  = sprintf("%'012d\n", $tracking_id);
 				}else{
 					$i = 0;
 				}

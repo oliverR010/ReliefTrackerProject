@@ -74,14 +74,14 @@
                                         <input type="hidden" name="status" value="<?php echo isset($status) ? $establishment_id : $_SESSION['login_establishment_id'] ?>">
                                         <?php endif; ?>
                                 <hr>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-md-12">
                                     <button class="btn btn-sm btn-secondary btn-block col-sm-2 float-right" type="button" onlclick='reset_form()'>Cancel</button>
                                         <button class="btn btn-sm btn-primary btn-block col-sm-2 float-right mt-0 mr-2">Save</button>
 
                                     </div>
                                     
-                                </div>
+                                </div> -->
                                 </div>
 
                                 </form>

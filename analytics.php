@@ -17,7 +17,7 @@
 		<div class="row mb-4 mt-4">
 			<div class="col-md-12">
                 <div class="text-center mt-5 mb-3">
-					<h2>Statistics</h2>
+					<h2>Analytics</h2>
 				</div>
 			</div>
 		</div>
