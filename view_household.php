@@ -20,41 +20,41 @@ foreach($qry->fetch_array() as $k => $val){
 <div class="row">
 <div class="col-lg-4">
 <div class="container-fluid" id="toPrint">
-<style type="text/css">
-	#bcode-field{
-		width:calc(100%) ;
-    	align-items: center;
+	<style type="text/css">
+		#bcode-field{
+			width:calc(100%) ;
+			align-items: center;
 
-	}
-	#bcode{
-		max-height: inherit;
-		max-width: inherit;
-		width:calc(85%) ;
-		height: 25vh;
-		margin-left: auto;
-  		margin-right: auto;
-	}
-	#bcode-label {
-  	font-weight: 700;
-    font-size: 17px;
-    text-align: justify;
-    text-align-last: justify;
-    text-justify: inter-word;
-	}
-	#dfield p{
-		margin: unset
-	}
-	#uni_modal .modal-footer{
-		display: none;
-	}
-	#uni_modal .modal-footer.display{
-		display: block;
-	}
-	.text-center{
-		text-align:center;
-	}
-	
-</style>
+		}
+		#bcode{
+			max-height: inherit;
+			max-width: inherit;
+			width:calc(85%) ;
+			height: 25vh;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		#bcode-label {
+		font-weight: 700;
+		font-size: 17px;
+		text-align: justify;
+		text-align-last: justify;
+		text-justify: inter-word;
+		}
+		#dfield p{
+			margin: unset
+		}
+		#uni_modal .modal-footer{
+			display: none;
+		}
+		#uni_modal .modal-footer.display{
+			display: block;
+		}
+		.text-center{
+			text-align:center;
+		}
+		
+	</style>
 	<div class="" id="bcode-field">
 		<?php 
 		$id = $tracking_id;
@@ -82,7 +82,10 @@ foreach($qry->fetch_array() as $k => $val){
 		<div id="bcode">
 			<?php 
 			echo '<img id="bcode" src="'.$urlRelativeFilePath.'" />';
+			
 			?>
+		
+			
 		</div>
 		<div id="bcode-label"><?php echo preg_replace('/([0-9])/s','$1 ', $tracking_id); ?></div>
 	</div>
@@ -134,22 +137,13 @@ foreach($qry->fetch_array() as $k => $val){
 	<div class="row">
 		<div class="col-lg-12">
 			<button class="btn btn-sm btn-secondary col-md-3 float-right" type="button" data-dismiss="modal">Close</button>
-			<button onclick="print_current_page()" class="btn btn-sm btn-success col-md-3 float-right mr-2" type="button" id="print"><i class="fa fa-print"> </i> Print</button>
+			<a href="print_qrcode.php" class="btn btn-sm btn-success col-md-3 float-right mr-2" type="button" id="print"><i class="fa fa-print"> </i> Print</a>
 		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
-	$('#print').click(function(){
-		var nw = window.open("","_blank","height=700,width=900")
-		var content = $('#toPrint').clone()
-			nw.document.write(content.html())
-			nw.document.close()
-			nw.print()
-			setTimeout(function(){
-				nw.close();
-			},500)
-	})
+
 
 	function print_current_page()
 		{
