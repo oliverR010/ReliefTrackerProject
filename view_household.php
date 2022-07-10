@@ -1,9 +1,13 @@
 <?php
 include 'db_connect.php';
+include('phpqrcode/qrlib.php');
 require 'assets/barcode/vendor/autoload.php';
+
+
 extract($_POST);
 
-$generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+// $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+
 $qry = $conn->query("SELECT *,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records where id= ".$_GET['id']);
 
 
@@ -25,8 +29,10 @@ foreach($qry->fetch_array() as $k => $val){
 	#bcode{
 		max-height: inherit;
 		max-width: inherit;
-		width:calc(100%) ;
-		height: 10vh;
+		width:calc(85%) ;
+		height: 25vh;
+		margin-left: auto;
+  		margin-right: auto;
 	}
 	#bcode-label {
   	font-weight: 700;
@@ -53,12 +59,31 @@ foreach($qry->fetch_array() as $k => $val){
 		<?php 
 		$id = $tracking_id;
 		$id_nostring = (int)$id;
+		$codeContents = $id_nostring;
+
+		$tempDir = "qrcodes/";
+		$fileName = 'qr_code_'.md5($codeContents).'.png';
+        $pngAbsoluteFilePath = $tempDir.$fileName;
+        $urlRelativeFilePath = $tempDir.$fileName;
+
+		// generating
+		if (!file_exists($pngAbsoluteFilePath)) {
+		    QRcode::png($codeContents, $pngAbsoluteFilePath,'L',10,5);
+		} else {
+			
+		}
+		
+		// displaying
+	
 
 		?>
-		<img id="bcode" src="data:image/png;base64,<?php echo base64_encode($generator->getBarcode
-		
-		($id_nostring, $generator::TYPE_CODE_128)) ?>">
-		
+		<!-- <img id="bcode" src="data:image/png;base64,<?php //echo base64_encode($generator->getBarcode -->
+		//($id_nostring, $generator::TYPE_CODE_128)) ?>"> -->
+		<div id="bcode">
+			<?php 
+			echo '<img id="bcode" src="'.$urlRelativeFilePath.'" />';
+			?>
+		</div>
 		<div id="bcode-label"><?php echo preg_replace('/([0-9])/s','$1 ', $tracking_id); ?></div>
 	</div>
 	<br>

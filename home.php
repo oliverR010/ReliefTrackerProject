@@ -1,4 +1,25 @@
 <?php include 'db_connect.php' ?>
+
+<style>
+    #preview{
+       width:500px;
+       height: 500px;
+   
+    }
+</style>
+    <div>
+       
+    </div>
+    
+    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" rel="nofollow"></script>
+<script type="text/javascript">
+
+
+</script>
+
+
 <style>
    span.float-right.summary_icon {
     font-size: 3rem;
@@ -7,24 +28,22 @@
     color: #ffffff96;
 }
 </style>
-
-
 <div class="containe-fluid">
-
-	<div class="row mt-3 ml-3 mr-3">
-            <div class="text-center mt-4 mb-4">
-					<h2>Let's Track it!</h2>
-				</div>
-			<div class="col-lg-12">
-    			<div class="card">
+    <div class="row">
+        <div class="text-center">
+        <video id="preview" ></video>
+        </div>
+    </div>
+			<div class="col-lg-12" >
+    			<div class="card" style="width:900px; margin-left:auto;margin-right:auto">
     				<div class="card-body">
     				<!-- <?php echo "Welcome back ". $_SESSION['login_name']."!"  ?> -->
     					<hr>	
 
                         <div class="row">
-                            <div class="col-lg-8 offset-2">
+                            <div class="col-sm-8 offset-2">
                                 <div class="container-fluid">
-                                <form action="" id="manage-records">
+                                    <form action="" id="manage-records">
                                     <input type="hidden" name="id" value="<?php echo isset($id) ? $id :'' ?>">
                                     <div class="form-group">
                                         <label for="" class="control-label">Tracking ID</label>
@@ -32,11 +51,11 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <button class="btn btn-sm btn-primary btn-sm col-sm-2 btn-block float-right" type="button" id="check">Check</button>
+                                            <button class="btn btn-sm btn-primary btn-sm col-sm-2 btn-block float-right mb-5" type="button" id="check">Check</button>
                                         </div>
                                     </div>
 
-                                    <div id="details" <?php echo isset($id) ? "style='display:block'" : 'style="display:none"' ?>>
+                                     <div id="details" <?php echo isset($id) ? "style='display:block'" : 'style="display:none"' ?>>
                                  
                                         <p><b>Address:</b> <span id="address"><?php echo isset($id) ? $caddress : ''?></span>,
                                         <span id="street"><?php echo isset($id) ? $street : ''?></span>,
@@ -83,19 +102,14 @@
                                     
                                 </div> -->
                                 </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>      			
+    		</div>		
 
-                                </form>
-                            </div>
-                            </div>
-                        </div>      			
-    				</div>
-    				
-    				
-    		      </div>
-                </div>
-	</div>
+
 <hr>
-
 </div>
 <script>
 
@@ -166,4 +180,43 @@
                 }
             })
     }
+
+
+    
+
+  var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+
+    scanner.addListener('scan',function(content){
+        // alert(content);
+        $('#tracking_id').val(content)
+        get_person()
+        //window.location.href=content;
+    });
+
+    Instascan.Camera.getCameras().then(function (cameras){
+        if(cameras.length>0){
+            scanner.start(cameras[1]);
+            $('[name="options"]').on('change',function(){
+                if($(this).val()==1){
+                    if(cameras[0]!=""){
+                        scanner.start(cameras[0]);
+                    }else{
+                        alert('No Front camera found!');
+                    }
+                }else if($(this).val()==2){
+                    if(cameras[1]!=""){
+                        scanner.start(cameras[1]);
+                    }else{
+                        alert('No Back camera found!');
+                    }
+                }
+            });
+        }else{
+            console.error('No cameras found.');
+            alert('No cameras found.');
+        }
+    }).catch(function(e){
+        console.error(e);
+        alert(e);
+    });
 </script>
