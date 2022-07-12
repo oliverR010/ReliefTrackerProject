@@ -4,11 +4,9 @@ require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
 $types = $conn->query("SELECT *,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records order by caddress asc");
-while($row=$types->fetch_assoc()):
 
-$html = "
-
-<style>
+	$html="
+	<style>
 	*{
 		padding:0px;
 		margin-left:10px;
@@ -41,48 +39,49 @@ $html = "
 	}
 
 </style>
+	<table border='1' width='100%' style='border-collapse: collapse;'>";
 
-<table border='1' width='100%' style='border-collapse: collapse;'>
-        <tr>
-            <th>Username</th><th>Email</th>
-            <th>Username</th><th>Email</th>
+		$html.="<tr>
+		<th>Tracking_ID</th>
+		<th>Address</th>
+		<th>Status</th>
+		<th>Date Distributed</th>
 
-        </tr>
+	</tr>";
+
+	while($row=$types->fetch_assoc()){
+		$html .="
+
         <tr>
 			
+			<td>".$row['tracking_id']." </td>
+			<td>".$row['caddress']." </td>
+			<td>".$row['status']." </td>
+			<td>".date("M d,Y h:i A",strtotime($row['date_created']))." </td>
 
-			<td>".$row['tracking_id']." </td>
-			<td>".$row['address']." </td>
-			<td>".$row['tracking_id']." </td>
-			<td>".$row['tracking_id']." </td>
 
           
         </tr>
-       
-        </table>";
-$filename = "newpdffile";
+       ";
+	}
+		$html .=" </table>";
+
+
+
+	
+$filename = "records";
 
 // include autoloader
 require_once 'dompdf/autoload.inc.php';
 
-// reference the Dompdf namespace
-
-
-// instantiate and use the dompdf class
 $dompdf = new Dompdf();
-
 $dompdf->loadHtml($html);
-
-// (Optional) Setup the paper size and orientation
 $dompdf->setPaper('A4', 'portrait');
 
-// Render the HTML as PDF
 $dompdf->render();
-
-// Output the generated PDF to Browser
 $dompdf->stream($filename,array("Attachment"=>0));
 
-endwhile;
+
 ?>
 
 <?php

@@ -4,10 +4,20 @@ require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-$types = $conn->query("SELECT *,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records order by caddress asc");
+
+if(isset($_GET['tracking']))
+     $id= $_GET['tracking'];
+	echo $id;
+
+
+$types = $conn->query("SELECT *,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) 
+as caddress FROM records where tracking_id = $id ");
+
 while($row=$types->fetch_assoc()):
 
     $id = $row['tracking_id'];
+    $address = $row['address'];
+
     $id_nostring = (int)$id;
     $codeContents = $id_nostring;
     
@@ -18,9 +28,13 @@ while($row=$types->fetch_assoc()):
     
 	$image=file_get_contents( $pngAbsoluteFilePath);
 	$imagedata=base64_encode($image);
-	$imgpath='<center><img style="width:250px" src="data:image/png;base64, '.$imagedata.'"><center>';
-	$HTML='<body ><div >'.$imgpath.'</div></body>';
+	$imgpath='<center>Barangay san isidro, Paranaque City </center><center><img style="width:250px" src="data:image/png;base64, '.$imagedata.'"> 
+	<center>';
 	
+	$HTML = $imgpath ; 
+
+
+	$filename = "qrcode";
 	//Setting options
 	$options=new Options();
 
@@ -29,15 +43,15 @@ while($row=$types->fetch_assoc()):
 	
 	$dompdf=new Dompdf($options);
 	$dompdf->loadHTML($HTML);
-
+	$dompdf->setPaper('A4', 'portrait');
 	
 	$dompdf->render();
-	$dompdf->stream();
+	$dompdf->stream($filename);
 
 
 endwhile;
 ?>
-
+ 
 <?php
 ?>
 

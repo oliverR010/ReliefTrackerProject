@@ -126,7 +126,7 @@ foreach($qry->fetch_array() as $k => $val){
 			
 			
 			</tr>
-			<?php endwhile; ?>
+			
 		</tbody>
 	</table>
 </div>
@@ -136,12 +136,15 @@ foreach($qry->fetch_array() as $k => $val){
 <div class="modal-footer display">
 	<div class="row">
 		<div class="col-lg-12">
-			<button class="btn btn-sm btn-secondary col-md-3 float-right" type="button" data-dismiss="modal">Close</button>
-			<a href="print_qrcode.php" class="btn btn-sm btn-success col-md-3 float-right mr-2" type="button" id="print"><i class="fa fa-print"> </i> Print</a>
+			<button class="btn btn-sm btn-secondary col-md-3 float-right " type="button" data-dismiss="modal">Close</button>
+			<a href="print_qrcode.php?tracking=<?php echo $row['tracking_id']?>" class="btn btn-sm btn-success col-md-3 float-right mr-2" type="button" id="print"><i class=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+			<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+			<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+			</svg> </i> Download</a>
 		</div>
 	</div>
 </div>
-
+<?php endwhile; ?>
 <script type="text/javascript">
 
 
@@ -156,4 +159,14 @@ foreach($qry->fetch_array() as $k => $val){
 				nw.close();
 			},500)
 		}
+
+		function downloads(){
+			var name = $(this).data('tracking_id'); 
+			alert(name);       
+			if (name) {
+				window.location = '/print_qrcode?id=' + name;
+			}
+			
+			
+	}
 </script>
