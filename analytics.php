@@ -12,6 +12,11 @@
   transform: scale(1.5);
   padding: 10px;
 }
+
+*{
+	padding:0px;
+	margin:0px;
+}
 </style>
 
 
@@ -24,9 +29,9 @@
 			</div>
 		</div>
         <div class="container-fluid mt-5">
-		<div class="row row-cols-1 row-cols-md-4 g-1">
+		<div class="row row-cols-1 row-cols-md-3 g-1">
             <div class="col">
-                <div class="card text-bg-primary mb-3" style="max-width: 30rem;">
+                <div class="card text-bg-primary mb-3" style="max-width: 35rem; height: 12rem;">
                 <div class="card-header text-center">Total No. of Distributed Goods</div>
                 <div class="card-body">
             
@@ -41,38 +46,32 @@
 						?>
 						<?php
 						endwhile;?>
-						<p><h2><center> <?php echo  $addAll?></center></h2> </p>
+						<p class="card-text"><h2><center> <?php echo  $addAll?></center></h2> </p>
 					</p>
                 </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card text-bg-warning mb-3" style="max-width: 30rem;">
-                <div class="card-header">Header</div>
+                <div class="card text-bg-warning mb-3" style="max-width: 35rem; height: 12rem;">
+                <div class="card-header text-center">No of Distributed Relief Goods</div>
                 <div class="card-body">
-                    <h5 class="card-title">Primary card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-text"><h2><center> <?php echo $rowcount = mysqli_num_rows( $types ); ?></h2></center></p>
                 </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card text-bg-info mb-3" style="max-width: 30rem;">
-                    <div class="card-header">Header</div>
+
+						<?php $households_registered = $conn->query("SELECT * ,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households order by caddress asc");
+						 ?>
+                <div class="card text-bg-info mb-3" style="max-width: 35rem; height: 12rem;">
+                    <div class="card-header text-center">No. of Registered Households</div>
                     <div class="card-body">
-                        <h5 class="card-title">Primary card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                       
+					<p class="card-text"><h2><center> <?php echo $rowcount = mysqli_num_rows( $households_registered ); ?></h2></center></p>
                 </div>
                 </div>   
             </div>
-            <div class="col">
-                <div class="card text-bg-success mb-3" style="max-width: 30rem;">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h5 class="card-title">Primary card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                </div>
-            </div>
+
             
 		</div>
       

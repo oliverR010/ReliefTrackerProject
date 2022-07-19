@@ -303,6 +303,7 @@ Class Action {
 		$get = $this->db->query("SELECT *, concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code,', ',street,', ',date_created) as caddress FROM records where tracking_id = $tracking_id ");
 
 		$data = array();
+		
 		if($get->num_rows > 0){
 			foreach($get->fetch_array() as $k => $v){
 				$data['status1'] = 1;

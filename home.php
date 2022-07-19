@@ -64,11 +64,14 @@
 
                                        <span id="state"><?php echo isset($id) ? $state : ''?></span>,
                                         <span id="zip_code"><?php echo isset($id) ? $zip_code : ''?></span>,
-                                        </p>
+                    
 
+                                        </p>
+                                        <p><b>No of Relief Pack:</b> <span id="reliefpacks"><?php echo isset($id) ? $reliefpacks :  ''?></span></p>
                                         <p>
+                                            
                                             <b>Status:</b> <span id="status"><?php echo isset($id) ? $status :  ''?></span>
-                                       
+
                                         </p>
                                         <p><b>Date Distributed:</b> <span id="date_created"><?php echo date("M d,Y h:i A",strtotime(isset($id)? $date_created : '')) ?></span></p>
 
@@ -167,7 +170,7 @@
                             $('#city').html(resp.city)
                             $('#state').html(resp.state)
                             $('#zip_code').html(resp.zip_code)
-
+                            $('#reliefpacks').html(resp.reliefpacks)
                             $('[name="person_id"]').val(resp.id)
                             $('#details').show()
                             end_load()
@@ -175,6 +178,9 @@
                         }else if(resp.status1 == 2){
                             alert_toast("Unknow tracking id.",'danger');
                             end_load();
+                        } else{
+                            alert_toast("Unknow tracking id.",'danger');
+                            end_load(); 
                         }
                     }
                 }
