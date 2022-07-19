@@ -193,13 +193,17 @@ Class Action {
 	}
 
 	function save_distribute(){
+
 		extract($_POST);
+		$reliefpacks = 1;
+
 		$data = " address = '$address' ";
 		$data .= ", street = '$street' ";
 		$data .= ", baranggay = '$baranggay' ";	
 		$data .= ", city = '$city' ";
 		$data .= ", state = '$state' ";
 		$data .= ", zip_code = '$zip_code' ";
+		$data .= ", reliefpacks = '$reliefpacks' ";
 	
 	
 		if(!empty($id)){

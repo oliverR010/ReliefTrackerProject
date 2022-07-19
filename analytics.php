@@ -13,6 +13,8 @@
   padding: 10px;
 }
 </style>
+
+
 	<div class="col-lg-12">
 		<div class="row mb-4 mt-4">
 			<div class="col-md-12">
@@ -25,10 +27,22 @@
 		<div class="row row-cols-1 row-cols-md-4 g-1">
             <div class="col">
                 <div class="card text-bg-primary mb-3" style="max-width: 30rem;">
-                <div class="card-header">Header</div>
+                <div class="card-header text-center">Total No. of Distributed Goods</div>
                 <div class="card-body">
-                    <h5 class="card-title">Primary card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            
+                    <p class="card-text">
+					<?php
+						$i = 1;
+						$addAll = 0;
+						$types = $conn->query("SELECT * ,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records order by caddress asc");
+								
+						while($row=$types->fetch_assoc()):
+						  $addAll+=(int)$row['reliefpacks']
+						?>
+						<?php
+						endwhile;?>
+						<p><h2><center> <?php echo  $addAll?></center></h2> </p>
+					</p>
                 </div>
                 </div>
             </div>
