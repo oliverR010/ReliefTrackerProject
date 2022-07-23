@@ -1,4 +1,11 @@
-<?php include('db_connect.php');?>
+<?php include('db_connect.php');
+
+session_start();
+if(!isset($_SESSION['login_id']))
+header('location:login.php');
+
+
+?>
 <style type="text/css">
 	table{
 		width:100%;

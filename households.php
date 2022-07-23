@@ -1,4 +1,10 @@
-<?php include('db_connect.php');?>
+<?php include('db_connect.php');
+
+
+if(!isset($_SESSION['login_id']))
+  header('location:login.php');
+
+?>
 <div class="container-fluid">
 <style>
 	input[type=checkbox]

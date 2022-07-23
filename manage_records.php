@@ -1,6 +1,9 @@
 <?php include 'db_connect.php' ?>
 <?php
-session_start();
+	session_start();
+	if(!isset($_SESSION['login_id']))
+	  header('location:login.php');
+
 if(isset($_GET['id'])){
 $qry = $conn->query("SELECT t.*, concat(p.address,', ',p.street,', ',p.baranggay,', ',p.city,', ',p.state,', ',p.zip_code) as caddress,p.tracking_id FROM records t inner join households p on p.id = t.person_id inner join establishments e on e.id = t.establishment_id  where t.id= ".$_GET['id']);
 foreach($qry->fetch_array() as $k => $val){

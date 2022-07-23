@@ -1,5 +1,9 @@
 <?php include('db_connect.php');
 
+session_start();
+if(!isset($_SESSION['login_id']))
+header('location:login.php');
+
 require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
@@ -42,17 +46,26 @@ $types = $conn->query("SELECT * FROM relief_goods ");
 	<table border='1' width='100%' style='border-collapse: collapse;'>";
 
 		$html.="<tr>
-		<th>Remaining Relief Packs</th>
 		<th>Distributed Relief Packs</th>
+		<th>Remaining Relief Packs</th>
 		<th>Registered Households</th>
 
 
 	</tr>";
+	$records = $conn->query("SELECT * ,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records order by caddress asc");
+       
+    $html .="
+			<tr>
+	
+			
+			<td>".$rowcount = mysqli_num_rows( $records )." </td>
+     
 
+       ";
 	while($row=$types->fetch_assoc()){
 		$html .="
 
-        <tr>
+       
 			
 			<td>". $row['no_of_relief_packs']." </td>
      
@@ -60,16 +73,7 @@ $types = $conn->query("SELECT * FROM relief_goods ");
         
        ";
     }
-    $records = $conn->query("SELECT * ,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM records order by caddress asc");
-       
-    $html .="
-
-   
-			
-			<td>".$rowcount = mysqli_num_rows( $records )." </td>
-     
-
-       ";
+  
 
     $households_registered = $conn->query("SELECT * ,concat(address,', ',street,', ',baranggay,', ',city,', ',state,', ',zip_code) as caddress FROM households order by caddress asc");
        

@@ -4,6 +4,9 @@ require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
+session_start();
+if(!isset($_SESSION['login_id']))
+header('location:login.php');
 
 if(isset($_GET['tracking']))
      $id= $_GET['tracking'];

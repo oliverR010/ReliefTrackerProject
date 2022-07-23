@@ -1,5 +1,7 @@
 <?php include('db_connect.php');
-
+session_start();
+if(!isset($_SESSION['login_id']))
+header('location:login.php');
 require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 

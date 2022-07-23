@@ -1,11 +1,18 @@
 <?php include 'db_connect.php' ?>
 <?php
+
+
+
 if(isset($_GET['id'])){
 	$qry = $conn->query("SELECT * FROM records where id= ".$_GET['id']);
 	foreach($qry->fetch_array() as $k => $val){
 		$$k=$val;
 }
+
 }
+session_start();
+if(!isset($_SESSION['login_id']))
+header('location:login.php');
 ?>
 <div class="container-fluid">
 		<p>Are you sure to delete this record?</p>

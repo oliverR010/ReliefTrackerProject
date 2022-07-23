@@ -2,6 +2,8 @@
 require 'dompdf/autoload.inc.php';
 
 
+if(!isset($_SESSION['login_id']))
+  header('location:login.php');
 ?>
 
 <div class="container-fluid">

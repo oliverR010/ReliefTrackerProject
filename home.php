@@ -1,5 +1,11 @@
 <?php include 'db_connect.php' ?>
 
+<?php 
+
+if(!isset($_SESSION['login_id']))
+  header('location:login.php');
+
+?>
 <style>
     #preview{
        width:500px;

@@ -1,11 +1,18 @@
 <?php include 'db_connect.php' ?>
 <?php
+
+session_start();
+if(!isset($_SESSION['login_id']))
+header('location:login.php');
+
 if(isset($_GET['id'])){
 	$qry = $conn->query("SELECT * FROM relief_goods where id= ".$_GET['id']);
 	foreach($qry->fetch_array() as $k => $val){
 		$$k=$val;
 }
 }
+
+
 ?>
 <div class="container-fluid">
 	
