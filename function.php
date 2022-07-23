@@ -67,6 +67,12 @@ if($action == "save_household"){
 		echo $save;
 }
 
+if($action == "save_reliefpacks"){
+	$save = $crud->save_reliefpacks();
+	if($save)
+		echo $save;
+}
+
 if($action == "save_distribute"){
 	$save = $crud->save_distribute();
 	if($save)

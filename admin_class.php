@@ -1,6 +1,9 @@
 <?php
 session_start();
+
+
 ini_set('display_errors', 1);
+
 Class Action {
 	private $db;
 
@@ -142,14 +145,24 @@ Class Action {
 		if($delete)
 			return 1;
 	}
+
+
+
 	function delete_records(){
 		extract($_POST);
+	
+
+
 		$status_pending = "Pending";
 		$data = " status = '$status_pending' ";
 		$data .= ", address = '$address' ";
 		
 		$save = $this->db->query("UPDATE households set ".$data." where address=".$address);
+
+		$save = $this->db->query("UPDATE relief_goods set no_of_relief_packs = no_of_relief_packs + 1");
+
 		$delete = $this->db->query("DELETE FROM records where id = ".$id);
+
 
 		if($save)
 			return 1;
@@ -192,6 +205,22 @@ Class Action {
 			return 1;
 	}
 
+	function save_reliefpacks(){
+		extract($_POST);
+		$data = " no_of_relief_packs = '$no_of_relief_packs' ";
+
+	if(empty($id)){
+		$save = $this->db->query("INSERT INTO relief_goods set ".$data);
+		
+	}else{
+	
+		$save = $this->db->query("UPDATE relief_goods set ".$data." where id=".$id);
+	}
+		if($save)
+			return 1;
+	}
+
+
 	function save_distribute(){
 
 		extract($_POST);
@@ -227,6 +256,7 @@ Class Action {
 			$data .= ", tracking_id = '$tracking_id' ";
 			$save = $this->db->query("INSERT INTO records set ".$data);
 			$save = $this->db->query("UPDATE households set status='$status_success' where id=".$id);
+			$save = $this->db->query("UPDATE relief_goods set no_of_relief_packs = no_of_relief_packs - 1");
 		}else{
 			$save = $this->db->query("UPDATE records set ".$data." where id=".$id);
 		}
@@ -266,8 +296,6 @@ Class Action {
 		if($delete)
 			return 1;
 	}
-
-
 
 	function save_track(){
 		extract($_POST);
