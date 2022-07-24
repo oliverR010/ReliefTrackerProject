@@ -228,6 +228,7 @@ Class Action {
 
 		$data = " address = '$address' ";
 		$data .= ", street = '$street' ";
+		$data .= ", id = '$id' ";
 		$data .= ", baranggay = '$baranggay' ";	
 		$data .= ", city = '$city' ";
 		$data .= ", state = '$state' ";
@@ -254,7 +255,7 @@ Class Action {
 			// $data .= ", reliefpacks = '$reliefpacks' ";
 			$data .= ", status = '$status_success' ";
 			$data .= ", tracking_id = '$tracking_id' ";
-			$save = $this->db->query("INSERT INTO records set ".$data);
+			$save = $this->db->query("INSERT INTO records set ".$data );
 			$save = $this->db->query("UPDATE households set status='$status_success' where id=".$id);
 			$save = $this->db->query("UPDATE relief_goods set no_of_relief_packs = no_of_relief_packs - 1");
 		}else{

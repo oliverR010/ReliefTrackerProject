@@ -36,9 +36,58 @@ if(!isset($_SESSION['login_id']))
 				<div class="card">
 					<div class="card-header">
 						<div class="container-fluid">
+								<div class="row float-right">
+									<div class="col-md ">
+									<form class="" action="" method="post" enctype="multipart/form-data">
+									<input type="file" name="excel" required value="">
+									<button class="btn btn-sm btn-warning" type="submit" name="import">Import</button>
+									</form>
+									</div>
+									<?php
+		
+									if(isset($_POST["import"])){
+										$fileName = $_FILES["excel"]["name"];
+										$fileExtension = explode('.', $fileName);
+										$fileExtension = strtolower(end($fileExtension));
+										$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
+
+										$targetDirectory = "uploads/" . $newFileName;
+										move_uploaded_file($_FILES['excel']['tmp_name'], $targetDirectory);
+
+										error_reporting(0);
+										ini_set('display_errors', 0);
+
+										require 'excelReader/excel_reader2.php';
+										require 'excelReader/SpreadsheetReader.php';
+
+										$reader = new SpreadsheetReader($targetDirectory);
+										foreach($reader as $key => $row){
+											$address = $row[0];
+											$street = $row[1];
+											$baranggay = $row[2];
+											$city = $row[3];
+											$state = $row[4];
+											$zip_code = $row[5];
+											$status = $row[6];
+											
+											mysqli_query($conn, "INSERT INTO households VALUES('', '$address', '$street', '$baranggay', '$city', '$state', '$zip_code', '$status')");
+										}
+
+										echo
+										"
+										<script>
+										alert('Succesfully Imported');
+										document.location.href = '';
+										</script>
+										";
+									}
+									?>
+								</div>	
 							<div class="row">
 								<div class="col-md text-center>
-									<span class="">
+									
+										<span class="">
+		
 										<button class="btn btn-primary btn-sm ml-2 mb-1 float-right"  type="button" id="new_household">
 										<i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -50,6 +99,7 @@ if(!isset($_SESSION['login_id']))
 										<path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z"/>
 										</svg></i> PDF</a>
 									</span>
+									
 								</div>
 							</div>
 						</div>	
