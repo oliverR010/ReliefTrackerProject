@@ -97,8 +97,10 @@ if(!isset($_SESSION['login_id']))
 						
 									<td class="text-center">
 										<button class="btn btn-sm btn-primary view_household mt-1" style="width:80px" type="button" data-id="<?php echo $row['id'] ?>" >View</button>				
+										<?php if($_SESSION['login_type'] == 1): ?>
 										<button class="btn btn-sm btn-danger delete_records
 										 mt-1" style="width:80px" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+										 <?php endif; ?>
 									</td>
 								</tr>
 								<?php endwhile; ?>

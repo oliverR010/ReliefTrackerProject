@@ -36,25 +36,6 @@ foreach($user->fetch_array() as $k =>$v){
 			</select>
 		</div>
 		<div id="est-field">
-		<?php if($_SESSION['login_type'] == 1): ?>
-			<div class="form-group">
-				<label for="" class="control-label">Establishment</label>
-				<select name="establishment_id" id="" class="custom-select select2">
-					<option value=""></option>
-			<?php 
-				$establishment = $conn->query("SELECT * FROM establishments order by name asc");
-				while($row= $establishment->fetch_assoc()):
-			?>
-					<option value="<?php echo $row['id'] ?>" <?php echo isset($meta['establishment_id']) && $row['id'] == $meta['establishment_id'] ? 'selected' : '' ?>><?php echo $row['name'] ?></option>
-			<?php endwhile; ?>
-				</select>
-			</div>
-			<?php else: ?>
-			<input type="hidden" name="establishment_id" value="<?php echo isset($meta['establishment_id']) ? $meta['establishment_id'] : $_SESSION['login_establishment_id'] ?>">
-			<?php endif; ?>
-		</div>
-		
-
 	</form>
 </div>
 <script>

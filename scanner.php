@@ -1,3 +1,11 @@
+<!-- <?php include 'db_connect.php' ?>
+<script>
+
+session_start();
+if(!isset($_SESSION['login_id']))
+header('location:login.php');
+
+</script>
 <style>
     #preview{
        width:500px;
@@ -58,4 +66,4 @@
   <label class="btn btn-secondary">
     <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
   </label>
-</div>
+</div> -->

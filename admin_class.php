@@ -46,9 +46,7 @@ Class Action {
 		if(!empty($password))
 		$data .= ", password = '".md5($password)."' ";
 		$data .= ", type = '$type' ";
-		if($type == 1)
-			$establishment_id = 0;
-		$data .= ", establishment_id = '$establishment_id' ";
+
 		$chk = $this->db->query("Select * from users where username = '$username' and id !='$id' ")->num_rows;
 		if($chk > 0){
 			return 2;
